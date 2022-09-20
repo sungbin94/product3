@@ -1,6 +1,7 @@
 package com.kh.demo.domain.common.file;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UploadFileDAO {
 
@@ -30,7 +31,7 @@ public interface UploadFileDAO {
    * @param uploadfileId
    * @return
    */
-  UploadFile findFileByUploadFileId(Long uploadfileId);
+  Optional<UploadFile> findFileByUploadFileId(Long uploadfileId);
 
 
   /**

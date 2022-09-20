@@ -1,8 +1,10 @@
 package com.kh.demo.web.form;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Data
 public class SaveForm {
@@ -16,5 +18,9 @@ public class SaveForm {
   @Positive
   @Max(9999999999L)
   private Long price;       //  PRICE	NUMBER(10,0)
+
+  private MultipartFile file;
+  private List<MultipartFile> files;
+  
 }
 

@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -135,7 +136,7 @@ public class UploadFileDAOImpl implements UploadFileDAO {
 
   //첨부파일 조회
   @Override
-  public UploadFile findFileByUploadFileId(Long uploadfileId) {
+  public Optional<UploadFile> findFileByUploadFileId(Long uploadfileId) {
     StringBuffer sql = new StringBuffer();
     sql.append(" select * ");
     sql.append("  from uploadfile ");
@@ -149,9 +150,9 @@ public class UploadFileDAOImpl implements UploadFileDAO {
           uploadfileId);
     }catch (EmptyResultDataAccessException e){
       e.printStackTrace();
-      uploadFile = null;
+    return Optional.empty();
     }
-    return uploadFile;
+    return null;
   }
 
   // 첨부파일 삭제 by uplaodfileId
