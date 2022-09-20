@@ -20,7 +20,7 @@ import java.util.Optional;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class UploadFileDAOImpl implements UploadFileDAO {
+public class UploadFileDAOImpl implements UploadFileDAO{
   private final JdbcTemplate jdbcTemplate;
 
   //업로드파일 등록-단건
@@ -142,17 +142,16 @@ public class UploadFileDAOImpl implements UploadFileDAO {
     sql.append("  from uploadfile ");
     sql.append(" where uploadfile_id = ? ");
 
-    UploadFile uploadFile = null;
     try {
-      uploadFile = jdbcTemplate.queryForObject(
+      UploadFile uploadFile =  uploadFile = jdbcTemplate.queryForObject(
           sql.toString(),
           new BeanPropertyRowMapper<>(UploadFile.class),
           uploadfileId);
+      return Optional.of(uploadFile);
     }catch (EmptyResultDataAccessException e){
       e.printStackTrace();
-    return Optional.empty();
+      return Optional.empty();
     }
-    return null;
   }
 
   // 첨부파일 삭제 by uplaodfileId
@@ -175,5 +174,4 @@ public class UploadFileDAOImpl implements UploadFileDAO {
 
     return jdbcTemplate.update(sql.toString(), code, rid);
   }
-
 }
