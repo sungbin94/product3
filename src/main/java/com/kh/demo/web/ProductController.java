@@ -57,6 +57,12 @@ public class ProductController {
         log.info("첨부파일이름={}", file.getOriginalFilename());
         log.info("파일크기={}", file.getSize());
         log.info("파일유형={}", file.getContentType());
+        String originalFilename = saveForm.getFile().getOriginalFilename();
+        try {
+          file.transferTo(new File("d:/tmp/" + originalFilename));
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
       });
     }
 
