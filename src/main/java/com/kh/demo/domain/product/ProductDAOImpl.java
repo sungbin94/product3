@@ -43,6 +43,7 @@ public class ProductDAOImpl implements ProductDAO{
       }
     },keyHolder);
 
+
     return Long.valueOf(keyHolder.getKeys().get("product_id").toString());
   }
 

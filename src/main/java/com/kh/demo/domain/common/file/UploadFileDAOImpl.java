@@ -61,12 +61,15 @@ public class UploadFileDAOImpl implements UploadFileDAO{
       }
     },keyHolder);
 
+
     return Long.valueOf(keyHolder.getKeys().get("uploadfile_id").toString());
   }
 
+
+
   //업로드파일 등록-여러건
   @Override
-  public void addFile(List<UploadFile> uploadFile) {
+  public void addFile(List<UploadFile> uploadFiles) {
 
     StringBuffer sql = new StringBuffer();
     sql.append("INSERT INTO uploadfile ( ");
@@ -91,18 +94,18 @@ public class UploadFileDAOImpl implements UploadFileDAO{
     jdbcTemplate.batchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
       @Override
       public void setValues(PreparedStatement ps, int i) throws SQLException {
-        ps.setString(1, uploadFile.get(i).getCode());
-        ps.setLong(2,uploadFile.get(i).getRid());
-        ps.setString(3, uploadFile.get(i).getStoreFileName());
-        ps.setString(4, uploadFile.get(i).getUploadFileName());
-        ps.setString(5, uploadFile.get(i).getFsize());
-        ps.setString(6, uploadFile.get(i).getFtype());
+        ps.setString(1, uploadFiles.get(i).getCode());
+        ps.setLong(2,uploadFiles.get(i).getRid());
+        ps.setString(3, uploadFiles.get(i).getStoreFileName());
+        ps.setString(4, uploadFiles.get(i).getUploadFileName());
+        ps.setString(5, uploadFiles.get(i).getFsize());
+        ps.setString(6, uploadFiles.get(i).getFtype());
       }
 
       //배치처리할 건수
       @Override
       public int getBatchSize() {
-        return uploadFile.size();
+        return uploadFiles.size();
       }
     });
 
