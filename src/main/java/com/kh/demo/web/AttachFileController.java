@@ -59,14 +59,16 @@ public class AttachFileController {
     String storeFileName = attachFile.getStoreFilename();
     String uploadFileName = attachFile.getUploadFilename();
 
-    Resource resource = new UrlResource("file:"+attachRoot+attachCode+"/"+storeFileName);
-    String encode = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
+    Resource resource = new UrlResource("file:" + attachRoot + attachCode + "/" + storeFileName);
 
+    //첨부파일명의 한글깨짐방지
+    String encode = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
+    //클라이언트가 파일을 다운로드해주기위해 응답메세지 헤더에 포함.
     String contentDisposition = "attachmemt; filename=\""+encode+"\"";
 
     res = ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition)
-        .body(resource);
+                        .header(HttpHeaders.CONTENT_DISPOSITION,contentDisposition)
+                        .body(resource);
     return res;
   }
 
