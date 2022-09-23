@@ -12,6 +12,7 @@
       grid-template-column: 100px 300px;
     }
 
+
   </style>
 </head>
 
@@ -35,11 +36,20 @@
     <button type="button" id="deleteBtn">삭제</button>
     <button type="button" id="listBtn">목록</button>
   </div>
-  <div><a href="http://localhost:9080/attach/file/P0101/41">상품설명</a></div>
-  <div>
-    <img width="500px" src="http://localhost:9080/attach/img/P0102/f137921e-7a08-4f31-a0ee-62a45ce57b34.png" alt="">
+  <div th:if="${form.attachFile}">
+    <a href="http://localhost:9080/attach/file/P0101/41"
+       th:href="@{/api/attach/file/{attachCode}/{fid}(attachCode=${form.attachFile.code},fid=${form.attachFile.uploadfileId})}"
+       th:text="${form.attachFile.uploadFilename}">상품설명</a>
+<!--       th:text="|${form.attachFile.uploadFilename}(${form.attachFile.fsize})(${form.attachFile.ftype})|">상품설명</a>-->
   </div>
-<script>
+  <div th:if="${form.imageFiles}">
+    <div th:each="imageFile:${form.imageFiles}">
+      <img width="500px" src="http://localhost:9080/attach/img/P0102/f137921e-7a08-4f31-a0ee-62a45ce57b34.png"
+           th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code},storeFilename=${imageFile.storeFilename})}"
+           alt="이미지를 불러올 수 없습니다!">
+    </div>
+  </div>
+  <script>
     //수정
     const $updateBtn = document.getElementById('updateBtn');
     $updateBtn.addEventListener('click', evt=>{
@@ -61,6 +71,12 @@
      $listBtn.addEventListener('click', evt=>{
       location.href = '/products';
      });
+
+
+
   </script>
+</div>
+
+</div>
 </body>
 </html>
